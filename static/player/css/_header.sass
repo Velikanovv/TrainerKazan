@@ -1,0 +1,107 @@
+.header
+    width: 100%
+    padding: 20px 30px 50px
+    background-repeat: no-repeat
+    background-size: 100%
+    position: relative
+    z-index: 1
+    margin-bottom: 100px
+    display: flex
+    align-items: center
+    overflow: hidden
+    filter: drop-shadow(0px 0px 60px #9EFFB4)
+    &::before
+        content: ''
+        display: block
+        width: 400%
+        height: 2000px
+        position: absolute
+        z-index: -1
+        bottom: 0
+        left: 50%
+        transform: translateX(-50%)
+        background: radial-gradient(264.02% 2395.12% at 50% 50%, rgba(146, 251, 144, 0.296) 0%, rgba(255, 207, 134, 0.296) 0.01%, rgba(214, 252, 107, 0.312) 100%), linear-gradient(93.09deg, #D5FD64 -1.97%, #25E873 103.04%), #181E18
+        border-radius: 50%
+    .btn
+        display: inline-block
+        padding: 12px 26px
+        font-weight: 600
+        font-size: 14px
+        background: #FFFFFF
+        color: #CAFA68
+        border-radius: 46px
+    img
+        display: none
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        z-index: -1
+    .nav
+        padding-top: 20px
+        padding-left: 100px
+        text-align: center
+        width: 100%
+        &__link
+            display: inline-block
+            font-weight: 500
+            font-size: 22px
+            line-height: 27px
+            letter-spacing: 0.08em
+            text-transform: uppercase
+            vertical-align: middle
+            padding: 0 14px
+            &:nth-child(2),
+            &:nth-child(4)
+                padding-top: 4px
+                font-size: 24px
+                line-height: 29px
+            &:nth-child(3)
+                padding-top: 8px
+                font-weight: bold
+                font-size: 32px
+                line-height: 39px
+
+    @media screen and ( max-width: 1200px )
+        padding: 30px 0px 30px
+        margin-bottom: 60px
+        flex-direction: column-reverse
+        .btn
+            margin-bottom: 20px
+            margin-right: 0
+        .nav
+            padding: 0
+            max-width: 600px !important
+            // text-align: left
+            &__link
+                font-size: 20px
+                font-weight: normal
+                margin-bottom: 8px
+                &:nth-child(2),
+                &:nth-child(4),
+                &:nth-child(3)
+                    padding-top: 0
+                    font-size: 20px
+                    line-height: 27px
+                    font-weight: normal
+
+    @media screen and ( max-width: 600px )
+        text-align: center
+        padding: 20px 0px 30px
+
+        .btn
+            // margin: 10px 0 0
+        .nav
+            padding: 0
+            max-width: 400px !important
+            text-align: center
+            &__link
+                font-size: 15px
+                margin: 0 0 2px
+                padding: 0 6px
+                &:nth-child(2),
+                &:nth-child(4),
+                &:nth-child(3)
+                    margin: 0 0 2px
+                    font-size: 15px
+                    padding: 0 6px

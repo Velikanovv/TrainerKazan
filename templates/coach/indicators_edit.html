@@ -1,0 +1,99 @@
+{% extends 'coach/_blank.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">{{ i_block.name }} | Изменить {{ exercise.name }}</h3>
+                </div><!-- .nk-block-head-content -->
+                <div class="nk-block-head-content">
+                    <div class="toggle-wrap nk-block-tools-toggle">
+                        {% csrf_token %}
+                        <ul class="nk-block-tools g-3 ">
+                            <li class="nk-block-tools-opt"><a href="{% url 'coach_indicators' %}" class="btn btn-light"><em class="icon ni ni-back-alt"></em><span>Назад</span></a></li>
+                        </ul>
+                    </div><!-- .toggle-wrap -->
+                </div><!-- .nk-block-head-content -->
+            </div><!-- .nk-block-between -->
+        </div><!-- .nk-block-head -->
+        <div class="form-group">
+            <label class="form-label">Заголовок</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Введите название" aria-label="" aria-describedby="btnGroupAddon" value="{{ exercise.name }}" id="newstitle">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Единица измерения</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Введите название" aria-label="" aria-describedby="btnGroupAddon" value="{{ exercise.measure_unit }}" id="mesuare">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Лучший результат</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Введите название" aria-label="" aria-describedby="btnGroupAddon" value="{{ exercise.best_result }}" id="best">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Дополнительно</label>
+            <ul class="custom-control-group g-3 align-center">
+                <li>
+                    <div class="custom-control custom-control-sm custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="vector" {% if exercise.vector %}checked{% endif %}>
+                        <label class="custom-control-label" for="vector">Вектор</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="form-group btns-d">
+            <button class="btn btn-primary btn-save"><em class="icon ni ni-save"></em><span>Создать</span></button>
+        </div>
+
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        'use strict';
+        $(document).ready(function () {
+
+            $('.btns-d').on('click', '.btn-save',function()
+            {
+                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                var title = document.getElementById('newstitle').value
+                var mesuare = document.getElementById('mesuare').value
+                var best = document.getElementById('best').value
+                var vector = document.getElementById('vector').checked
+                var data = new FormData();
+                data.append('csrfmiddlewaretoken', csrftoken);
+                data.append('title', title);
+                data.append('mesuare', mesuare);
+                data.append('best', best);
+                data.append('vector', vector);
+                data.append('action', 'create');
+                var ready = true;
+                if(ready){
+                    $.ajax
+                    ({
+                        data: data, // get the form data
+                        type: "POST", // GET or POST
+                        url: "{% url 'coach_indicators_edit' i_block.pk exercise.pk %}",
+                        processData: false,
+                        contentType: false,
+                        // on success
+                        success: function (response)
+                        {
+                            window.location.replace('{% url 'coach_indicators' %}');
+                        },
+                        // on error
+                        error: function (response)
+                        {
+                            Swal.fire("Ошибка", response.errors, "error");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

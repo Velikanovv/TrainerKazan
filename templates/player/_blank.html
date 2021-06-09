@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.css">
+
+    <link rel="stylesheet" href="{% static 'player/css/style.css' %}">
+</head>
+
+<body>
+
+    <main class="{% block type %}{% endblock %}">
+        <header class="header">
+            <img src="{% static 'player/img/header-bg.svg' %}" alt="img">
+            <nav class="nav container">
+                <a href="{% url 'player_my_way' %}" class="nav__link">Мой путь</a>
+                <a href="{% url 'player_homeworks' %}" class="nav__link">Задания</a>
+                <a href="{% url 'player_main' %}" class="nav__link">Главная</a>
+                <a href="{% url 'player_team' %}" class="nav__link">Команда</a>
+                <a href="{% url 'player_cabinet' %}" class="nav__link">Кабинет</a>
+            </nav>
+            <a href="{% url 'signout' %}" class="btn">Выйти</a>
+        </header>
+        {% block main %}
+        {% endblock %}
+    </main>
+</body>
+
+
+{% block script %}
+{% endblock %}
+</html>

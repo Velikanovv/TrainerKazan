@@ -1,0 +1,80 @@
+{% extends 'coach/_blank.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="nk-block-head nk-block-head-sm">
+        <div class="nk-block-between">
+            <div class="nk-block-head-content">
+                <h3 class="nk-block-title page-title">Команды</h3>
+                <div class="nk-block-des text-soft">
+                    <p>Все команды</p>
+                </div>
+            </div><!-- .nk-block-head-content -->
+            <div class="nk-block-head-content">
+                <div class="toggle-wrap nk-block-tools-toggle">
+                        <ul class="nk-block-tools g-3">
+                            <li class="nk-block-tools-opt"><a href="{% url 'coach_team_create' %}" class="btn btn-primary"><em class="icon ni ni-plus"></em><span>Создать команду</span></a></li>
+                        </ul>
+                </div><!-- .toggle-wrap -->
+            </div><!-- .nk-block-head-content -->
+        </div><!-- .nk-block-between -->
+    </div><!-- .nk-block-head -->
+    <div class="nk-block">
+    {% for team_group in teams %}
+        <div class="row g-gs">
+            {% for team in team_group %}
+            <div class="col-sm-6 col-xl-4">
+                <div class="card card-bordered h-100">
+                    <div class="card-inner">
+                        <div class="project">
+                            <div class="project-head">
+                                <a href="{% url 'coach_team' team.pk %}" class="project-title">
+                                    <div class="user-avatar sq bg-purple"><span>{{ team.name|first|upper }}</span></div>
+                                    <div class="project-info">
+                                        <h6 class="title">{{ team.name|title }}</h6>
+                                    </div>
+                                </a>
+                                <div class="drodown">
+                                    <a href="#" class="dropdown-toggle btn btn-sm btn-icon btn-trigger mt-n1 mr-n1" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <ul class="link-list-opt no-bdr">
+                                            <li><a href="{% url 'coach_team' team.pk %}"><em class="icon ni ni-eye"></em><span>Открыть</span></a></li>
+                                            <li><a href="{% url 'coach_team_delete' team.pk %}"><em class="icon ni ni-trash"></em><span>Удалить</span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-meta">
+                                <ul class="project-users g-1">
+                                    {% if team.users.count == 0 %}
+                                        <li>
+                                            <div class="user-avatar bg-light sm"><span>0</span></div>
+                                        </li>
+                                        {% else %}
+                                        {% for usr in  team.users.all %}
+                                            {% if forloop.counter0 < 2 %}
+                                                <li>
+                                                    <div class="user-avatar sm bg-blue"><img src="{{ usr.pic_small.url }}" alt=""></div>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if team.users.count > 2 %}
+                                            <li>
+                                                <div class="user-avatar bg-light sm"><span>+{{ team.users.count|add:"-2" }}</span></div>
+                                            </li>
+                                            {% endif %}
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    </div><!-- .nk-block -->
+{% endblock %}
+{% block scripts %}
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'coach/_blank.html' %}
+{% load static %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">{{ indicator.name }} | Новый результат</h3>
+                    {% if success == 'success' %}
+                        <div class="nk-block-des text-soft">
+                            <p>Результат записан.</p>
+                        </div>
+                    {% endif %}
+                </div><!-- .nk-block-head-content -->
+                <div class="nk-block-head-content">
+                    <a href="{% url 'coach_team_indicators' team.pk %}" class="btn btn-light"><em class="icon ni ni-back-alt"></em><span>Назад</span></a>
+                </div><!-- .nk-block-head-content -->
+            </div><!-- .nk-block-between -->
+        </div><!-- .nk-block-head -->
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="form-label" for="def_6">Ученик</label>
+                <div class="form-control-wrap ">
+                    <div class="form-control-select">
+                        <select class="form-control" id="def_6" name="user">
+                            {% for usr in users %}
+                                <option value="{{ usr.pk }}">{{ usr.surname|title }} {{ usr.name|title }} {{ usr.patronymic|title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Результат</label>
+                <div class="form-control-wrap">
+                    <div class="form-text-hint">
+                        <span class="overline-title">{{ indicator.measure_unit }}</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" value="" id="t_name" name="result">
+                </div>
+            </div>
+            <div class="form-group btns-d">
+                <input type="hidden" value="some_team" name="r_type">
+                <button class="btn btn-primary btn-save" type="submit"><em class="icon ni ni-save"></em><span>Сохранить</span></button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        'use strict';
+    </script>
+{% endblock %}

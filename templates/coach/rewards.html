@@ -1,0 +1,77 @@
+{% extends 'coach/_blank.html' %}
+{% load static %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="nk-block">
+    </div>
+    <div class="nk-block-head nk-block-head-sm">
+        <div class="nk-block-between">
+            <div class="nk-block-head-content">
+                <h3 class="nk-block-title page-title">Награды</h3>
+                <div class="nk-block-des text-soft">
+                    <p>Всего наград: {{ rewards.count }}</p>
+                </div>
+            </div><!-- .nk-block-head-content -->
+            <div class="nk-block-head-content">
+                        <ul class="nk-block-tools g-3">
+                            <li class="nk-block-tools-opt">
+                                <div class="drodown">
+                                    <a href="{% url 'coach_rewards_create' %}" class="dropdown-toggle btn btn-icon btn-primary"><em class="icon ni ni-plus"></em></a>
+                                </div>
+                            </li>
+                        </ul>
+            </div><!-- .nk-block-head-content -->
+        </div><!-- .nk-block-between -->
+    </div><!-- .nk-block-head -->
+    <div class="nk-block">
+        <div class="card card-bordered card-stretch">
+            <div class="card-inner-group">
+                <div class="card-inner p-0">
+                    <div class="nk-tb-list nk-tb-ulist is-compact">
+                        <div class="nk-tb-item nk-tb-head">
+                            <div class="nk-tb-col"><span class="sub-text">Награда</span></div>
+                            <div class="nk-tb-col"><span class="sub-text">Получили</span></div>
+                            <div class="nk-tb-col nk-tb-col-tools text-right">
+                            </div>
+                        </div><!-- .nk-tb-item -->
+                        {% for reward in rewards %}
+                            <div class="nk-tb-item">
+                                <div class="nk-tb-col">
+                                    <div class="user-card">
+                                        <div class="user-avatar md bg-white">
+                                            <img src="{{ reward.pic_small.url }}" alt="">
+                                        </div>
+                                        <div class="user-name">
+                                            <span class="tb-lead">{{ reward.name }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nk-tb-col">
+                                    <span>{{ reward.user_rewards.count }}</span>
+                                </div>
+                                <div class="nk-tb-col nk-tb-col-tools">
+                                    <ul class="nk-tb-actions gx-2">
+                                        <li>
+                                            <div class="drodown">
+                                                <a href="#" class="btn btn-sm btn-icon btn-trigger dropdown-toggle" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <ul class="link-list-opt no-bdr">
+                                                        <li><a href="{% url 'coach_rewards_edit' reward.pk %}"><em class="icon ni ni-edit"></em><span>Изменить</span></a></li>
+                                                        <li><a href="{% url 'coach_rewards_delete' reward.pk %}"><em class="icon ni ni-trash"></em><span>Удалить</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div><!-- .nk-tb-item -->
+                        {% endfor %}
+                    </div><!-- .nk-tb-list -->
+                </div><!-- .card-inner -->
+            </div><!-- .card-inner-group -->
+        </div><!-- .card -->
+    </div><!-- .nk-block -->
+{% endblock %}
+{% block scripts %}
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'coach/_blank.html' %}
+{% load static %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="nk-block-head nk-block-head-sm">
+        <div class="nk-block-between">
+            <div class="nk-block-head-content">
+                <h3 class="nk-block-title page-title">Тренеры</h3>
+            </div><!-- .nk-block-head-content -->
+            <div class="nk-block-head-content">
+                <ul class="nk-block-tools g-3">
+                    <li class="nk-block-tools-opt">
+                        <div class="drodown">
+                            <a href="{% url 'coach_trainers_create' %}" class="dropdown-toggle btn btn-icon btn-primary"><em class="icon ni ni-plus"></em></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div><!-- .nk-block-between -->
+    </div><!-- .nk-block-head -->
+    <div class="nk-block">
+        <div class="card card-bordered card-stretch">
+            <div class="card-inner-group">
+                <div class="card-inner p-0">
+                    <div class="nk-tb-list nk-tb-ulist">
+                        <div class="nk-tb-item nk-tb-head">
+                            <div class="nk-tb-col"><span class="sub-text">Пользователь</span></div>
+                            <div class="nk-tb-col"><span class="sub-text">Логин</span></div>
+                            <div class="nk-tb-col tb-col-lg"><span class="sub-text">Дата рождения</span></div>
+                            <div class="nk-tb-col tb-col-lg"><span class="sub-text">Последний вход</span></div>
+                        </div><!-- .nk-tb-item -->
+                        {% for usr in users %}
+                            <div class="nk-tb-item">
+                                <div class="nk-tb-col">
+                                    <a href="{% url 'coach_trainers_edit' usr.pk %}">
+                                        <div class="user-card">
+                                            <div class="user-avatar bg-danger">
+                                                <img src="{{ usr.pic_small.url }}" alt="">
+                                            </div>
+                                            <div class="user-info">
+                                                <span class="tb-lead">{{ usr.surname|title }} {{ usr.name|title }} {{ usr.patronymic|title }}<span class="dot {% if usr.is_active %}{% endif %}{% if usr.is_banned %}{% endif %} d-md-none ml-1"></span></span>
+                                                <span>{{ usr.email }}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="nk-tb-col">
+                                    <span>{{ usr.username }}</span>
+                                </div>
+                                <div class="nk-tb-col tb-col-lg">
+                                    <ul class="list-status">
+                                        <li> <span>{{ usr.birthday }}</span></li>
+                                    </ul>
+                                </div>
+                                <div class="nk-tb-col tb-col-lg">
+                                    <span>{{ usr.last_login|date:"d.m.Y" }}</span>
+                                </div>
+                            </div><!-- .nk-tb-item -->
+                        {% endfor %}
+                    </div><!-- .nk-tb-list -->
+                </div><!-- .card-inner -->
+            </div><!-- .card-inner-group -->
+        </div><!-- .card -->
+    </div><!-- .nk-block -->
+{% endblock %}
+{% block scripts %}
+{% endblock %}

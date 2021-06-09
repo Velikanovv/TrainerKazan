@@ -1,0 +1,193 @@
+{% extends 'coach/_blank.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Проверка ДЗ: {{ work.name }}</h3>
+                </div><!-- .nk-block-head-content -->
+                <div class="nk-block-head-content">
+                    <div class="toggle-wrap nk-block-tools-toggle">
+                            {% csrf_token %}
+                            <ul class="nk-block-tools g-3 ">
+                                <li class="nk-block-tools-opt"><a href="{% url 'coach_team_homeworks' team.pk %}" class="btn btn-light"><em class="icon ni ni-back-alt"></em><span>Назад</span></a></li>
+                            </ul>
+                    </div><!-- .toggle-wrap -->
+                </div><!-- .nk-block-head-content -->
+            </div><!-- .nk-block-between -->
+        </div><!-- .nk-block-head -->
+        <div class="nk-block">
+            <div class="card">
+                <div id="faqs" class="accordion">
+                    <div class="accordion-item">
+                        <a href="#" class="accordion-head collapsed" data-toggle="collapse" data-target="#faq-q1" aria-expanded="false">
+                            <h6 class="title">Домашнее задание</h6>
+                            <span class="accordion-icon"></span>
+                        </a>
+                        <div class="accordion-body collapse" id="faq-q1" data-parent="#faqs" style="">
+                            <div class="accordion-inner">
+                                {{ work.text|safe }}
+                            </div>
+                        </div>
+                    </div><!-- .accordion-item -->
+                </div><!-- .accordion -->
+            </div><!-- .card -->
+        </div>
+        {% for wr in nrat_work  %}
+            <div class="nk-block">
+                <div class="card card-bordered">
+                    <div class="card-inner card-inner-xl">
+                        <article class="entry">
+                            <h3>{{ wr.user.surname|title }} {{ wr.user.name|title }} {{ wr.user.patronymic|title }}</h3>
+                            <video width="370" controls>
+                                <source src="{{ wr.video.url }}" type="video/ogg" />
+                                Your browser does not support the video tag.
+                            </video>
+                            <form method="POST" class="form-contact">{% csrf_token %}
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label"><span>Оценка</span></label>
+                                            <div class="form-control-wrap">
+                                                <select class="form-select" data-search="off" data-ui="lg" name="select">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div><!-- .col -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label"><span>Комментарий</span></label>
+                                            <div class="form-control-wrap">
+                                                <div class="form-editor-custom">
+                                                    <textarea class="form-control form-control-lg no-resize" placeholder="Оставьте комментарий к дз" name="comment"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- .col -->
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">Оценить</button>
+                                        <input type="hidden" name="user" value="{{ wr.user.pk }}">
+                                        <input type="hidden" name="action" value="create">
+                                    </div><!-- .col -->
+                                </div><!-- .row -->
+                            </form><!-- .form-contact -->
+                        </article>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% for wr in rat_work  %}
+            <div class="nk-block">
+                <div class="card card-bordered">
+                    <div class="card-inner card-inner-xl">
+                        <article class="entry">
+                            <h3>{{ wr.user.surname|title }} {{ wr.user.name|title }} {{ wr.user.patronymic|title }}(Оценка: {{ wr.rating }})</h3>
+                            <video width="370" controls playsinline>
+                                <source src="{{ wr.video.url }}" type="video/mp4"/>
+                                Your browser does not support the video tag.
+                            </video>
+                            <form method="POST" class="form-contact">{% csrf_token %}
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label"><span>Оценка</span></label>
+                                            <div class="form-control-wrap">
+                                                <select class="form-select" data-search="off" data-ui="lg" name="select">
+                                                    <option value="1" {% if wr.rating == 1 %}selected{% endif %}>1</option>
+                                                    <option value="2" {% if wr.rating == 2 %}selected{% endif %}>2</option>
+                                                    <option value="3" {% if wr.rating == 3 %}selected{% endif %}>3</option>
+                                                    <option value="4" {% if wr.rating == 4 %}selected{% endif %}>4</option>
+                                                    <option value="5" {% if wr.rating == 5 %}selected{% endif %}>5</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div><!-- .col -->
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label class="form-label"><span>Комментарий</span></label>
+                                            <div class="form-control-wrap">
+                                                <div class="form-editor-custom">
+                                                    <textarea class="form-control form-control-lg no-resize" placeholder="Оставьте комментарий к дз" name="comment">{{ wr.comment }}</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- .col -->
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">Изменить оценку</button>
+                                        <input type="hidden" name="user" value="{{ wr.user.pk }}">
+                                        <input type="hidden" name="action" value="create">
+                                    </div><!-- .col -->
+                                </div><!-- .row -->
+                            </form><!-- .form-contact -->
+                        </article>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        'use strict';
+        $(document).ready(function () {
+            var elText;
+            var _basic = '.summernote-basic';
+
+            if ($(_basic).exists()) {
+                $(_basic).each(function () {
+                    elText = $(this);
+                    $(this).summernote({
+                        placeholder: 'Hello stand alone ui',
+                        tabsize: 2,
+                        height: 500,
+                        toolbar: [['style', ['style']], ['font', ['bold', 'underline', 'strikethrough', 'clear']], ['font', ['superscript', 'subscript']], ['color', ['color']], ['fontsize', ['fontsize', 'height']], ['para', ['ul', 'ol', 'paragraph']], ['table', ['table']], ['insert', ['link', 'video']], ['view', ['fullscreen', 'codeview', 'help']]]
+                    });
+                });
+            }
+
+            $('.btns-d').on('click', '.btn-save',function()
+            {
+                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                var text = elText.summernote('code');
+                var title = document.getElementById('newstitle').value
+                var date = document.getElementById('pdate').value
+                var data = new FormData();
+                var img = $('#picture-n')[0].files[0];
+                data.append('img', img);
+                data.append('csrfmiddlewaretoken', csrftoken);
+                data.append('title', title);
+                data.append('text', text);
+                data.append('action', 'create');
+                data.append('date', date);
+                var ready = true;
+                if(ready){
+                    $.ajax
+                    ({
+                        data: data, // get the form data
+                        type: "POST", // GET or POST
+                        url: "",
+                        processData: false,
+                        contentType: false,
+                        // on success
+                        success: function (response)
+                        {
+                            window.location.replace('');
+                        },
+                        // on error
+                        error: function (response)
+                        {
+                            Swal.fire("Ошибка", response.responseJSON.errors, "error");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

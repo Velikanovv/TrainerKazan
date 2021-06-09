@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+
+<head>
+    <base href="../../../">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="./images/favicon.png">
+    <!-- Page Title  -->
+    <title>Вход</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="{% static 'user_panel/assets/css/dashlite.css' %}?ver=2.2.0">
+    <link id="skin-default" rel="stylesheet" href="./assets/css/theme.css?ver=2.2.0">
+</head>
+
+<body class="nk-body bg-white npc-general pg-auth">
+<div class="nk-app-root">
+    <!-- main @s -->
+    <div class="nk-main ">
+        <!-- wrap @s -->
+        <div class="nk-wrap nk-wrap-nosidebar">
+            <!-- content @s -->
+            <div class="nk-content ">
+                <div class="nk-block nk-block-middle nk-auth-body wide-xs">
+                    <div class="card card-bordered">
+                        <div class="card-inner card-inner-lg">
+                            <div class="nk-block-head">
+                                <div class="nk-block-head-content">
+                                    {% if user.is_authenticated %}
+                                        <h4 class="nk-block-title">Вы уже вошли</h4>
+                                    {% else %}
+                                    <h4 class="nk-block-title">Вход</h4>
+                                    <div class="nk-block-des">
+                                        <p>Добро Пожаловть! {{ error }}</p>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% if not user.is_authenticated %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="form-group" id="usernamegr">
+                                    <label class="form-label" for="name">Логин</label>
+                                    <input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="Введите логин" value="">
+                                </div>
+                                <div class="form-group" id="passgr">
+                                    <label class="form-label" for="password">Пароль</label>
+                                    <input type="password" class="form-control form-control-lg" id="password" name="password" placeholder="Введите пароль" value="">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-lg btn-primary btn-block continue-button" id="continue-button">Войти</button>
+                                </div>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- wrap @e -->
+            </div>
+            <!-- content @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+    <!-- JavaScript -->
+    <script src="{% static 'user_panel/assets/js/bundle.js' %}?ver=2.2.0"></script>
+    <script src="{% static 'user_panel/assets/js/scripts.js' %}?ver=2.2.0"></script>
+</html>

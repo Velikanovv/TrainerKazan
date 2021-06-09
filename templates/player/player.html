@@ -1,0 +1,115 @@
+{% extends 'player/_blank.html' %}
+{% load static %}
+{% block title %}Игрок{% endblock %}
+{% block type %}player_card{% endblock %}
+{% block main %}
+        <div class="wrapper container">
+            <div class="player big">
+                <div class="player__num">{{ user.player_number }}</div>
+                <img src="{{ user.pic.url }}" class="player__img" alt="img">
+                <div class="player__title">
+                    <p class="player__name">{{ user.name }}<br>{{ user.surname }}</p>
+                    <ul class="player__descr">
+                        {% for st in user.main_statics.all %}
+                            <li>{{ st.block.name|slice:":3"|upper }}: {{ st.result.normalize }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="main_info">
+                <p>ФИО: <b>{{ user.surname }} {{ user.name }} {{ user.patronymic }}</b></p>
+                <p>Команда: <b>{{ team.name }}</b></p>
+                <p>Номер: <b>{{ user.player_number }}</b></p>
+                <p>Выполнено ДЗ: <b>{{ done_hw }}/{{ all_hw }}</b></p>
+            </div>
+            <div class="chart">
+                <canvas id="myChart" height="288"></canvas>
+            </div>
+            {% for bl in main_stat %}
+                {% if bl.indicators_ex_statics.count > 0 %}
+            <div class="score">
+                <p class="score__heading">{{ bl.block.name }}</p>
+                <div class="score__chart">
+                    <span class="score__chart-num">
+                        {{ bl.result.normalize }}<sup>%</sup>
+                    </span>
+                    <svg height="200" width="300">
+                        <circle stroke-dashoffset="{% for p in percs %}{% if forloop.counter0 == forloop.parentloop.counter0 %}{{ p }}{% endif %}{% endfor %}" />
+                    </svg>
+                </div>
+                </svg>
+                {% for ex in bl.indicators_ex_statics.all %}
+                <div class="score-item">
+                    <div class="score-header">
+                        <span class="score-item__heading">{{ ex.indicator.name }}</span>
+                        <span class="score-item__num">{{ ex.result.normalize }}</span>
+                    </div>
+                    <div class="score-item__progress"><span style="width: {{ ex.result.normalize }}%; background-color: {% if ex.result.normalize > 80 %}{% elif ex.result.normalize > 40 %}orange{% else %}red{% endif %};"></span></div>
+                </div>
+                    {% endfor %}
+            </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    <div class="wrapper">
+    {% for rew in user.rewards.all %}
+        <a class="game">
+            <img src="{{ rew.pic.url }}" alt="img" style="border-radius: 1000px!important;">
+            <div class="game-title">
+                <h3 class="game__heading">{{ rew.name }}</h3>
+                <p class="game__descr">
+                    Награда
+                </p>
+            </div>
+        </a>
+    {% endfor %}
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script>
+        var data = {
+            labels: [{% for bl in main_stat %}"{{ bl.block.name }}"{% if not forloop.last %},{% endif %}{% endfor %}],
+            datasets: [
+                {
+                    label: "",
+                    backgroundColor: "rgba(179,181,198,0.2)",
+                    borderColor: "rgba(127, 255, 0,1)",
+                    pointBackgroundColor: "rgba(127, 255, 0,1)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgba(179,181,198,1)",
+                    data: [{% for bl in main_stat %}{{ bl.result }}{% if not forloop.last %},{% endif %}{% endfor %}]
+                },
+            ]
+        };
+        var ctx = document.getElementById("myChart");
+        var options = {
+            tooltips: {
+                mode: 'label',
+                callbacks: {
+                    label: tooltipItem => `${tooltipItem.yLabel}: ${tooltipItem.xLabel}`,
+                    title: () => null,
+                }
+            },
+            legend: {
+                display: false,
+            },
+            scales: {
+                yAxes: [{
+                    display: false,
+                    gridLines: {
+                        display: false
+                    }
+                }]
+            }
+        };
+        var myRadarChart = new Chart(ctx, {
+            type: 'radar',
+            data: data,
+            options: options,
+        });
+
+    </script>
+{% endblock %}

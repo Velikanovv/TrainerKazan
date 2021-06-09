@@ -1,0 +1,68 @@
+{% extends 'player/_blank.html' %}
+{% load static %}
+{% block title %}{{ homework.name }}{% endblock %}
+{% block type %}task{% endblock %}
+{% block main %}
+    <div class="container">
+        <h1 class="title-heading">{{ homework.name }}</h1>
+        <p>
+            {{ homework.text|safe }}
+        </p>
+        {% if user in homework.done.all %}
+            <div class="wrapper">
+            <h2 class="title-heading">Ваш ответ</h2>
+            </div>
+            <div class="wrapper">
+            <video width="370" controls>
+                <source src="{{ done_hw.video.url }}" type="video/ogg" />
+                Your browser does not support the video tag.
+            </video>
+            </div>
+            {% if done_hw.done == True %}
+            <h3 class="title-heading">Оценка: {{ done_hw.rating }}</h3>
+                <p>
+                    {{ done_hw.comment|safe }}
+                </p>
+            {% else %}
+                <h3 class="title-heading">Еще не проверено</h3>
+            {% endif %}
+            </div>
+            <form enctype="multipart/form-data" method="POST">{% csrf_token %}
+                <div class="wrapper">
+                    <div class="form-group">
+                        <label class="form-label">Загрузите видео</label>
+                        <div class="form-control-wrap">
+                            <div class="custom-file">
+                                <input type="file" multiple class="custom-file-input" id="picture-n" accept="" name="img">
+                                <label class="custom-file-label" for="customFile">Выберите файл</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wrapper">
+                    <button type="submit" style="display: inline-block;color: white;text-decoration: none;padding: .5em 2em;outline: none;border-width: 2px 0;border-style: solid none;border-color: #FDBE33 #000 #D77206;border-radius: 6px;background: linear-gradient(#F3AE0F, #E38916) #E38916;transition: 0.2s;">Заменить видео</button>
+                    <input type="hidden" name="action" value="create">
+                </div>
+            </form>
+        {% else %}
+            <h2 class="title-heading">Сдать ДЗ</h2>
+            <form enctype="multipart/form-data" method="POST">{% csrf_token %}
+                <div class="form-group">
+            <div class="wrapper">
+                    <label class="form-label">Загрузите видео</label>
+                    <div class="form-control-wrap">
+                        <div class="custom-file">
+                            <input type="file" multiple class="custom-file-input" id="picture-n" accept="" name="img">
+                            <label class="custom-file-label" for="customFile">Выберите файл</label>
+                        </div>
+                    </div>
+            </div>
+            <div class="wrapper">
+                <button type="submit" style="display: inline-block;color: white;text-decoration: none;padding: .5em 2em;outline: none;border-width: 2px 0;border-style: solid none;border-color: #FDBE33 #000 #D77206;border-radius: 6px;background: linear-gradient(#F3AE0F, #E38916) #E38916;transition: 0.2s;">Сдать ДЗ</button>
+                <input type="hidden" name="action" value="create">
+            </div>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

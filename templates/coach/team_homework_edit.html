@@ -1,0 +1,116 @@
+{% extends 'coach/_blank.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Изменить ДЗ</h3>
+                </div><!-- .nk-block-head-content -->
+                <div class="nk-block-head-content">
+                    <div class="toggle-wrap nk-block-tools-toggle">
+                            {% csrf_token %}
+                            <ul class="nk-block-tools g-3 ">
+                                <li class="nk-block-tools-opt"><a href="{% url 'coach_team_homeworks' team.pk %}" class="btn btn-light"><em class="icon ni ni-back-alt"></em><span>Назад</span></a></li>
+                            </ul>
+                    </div><!-- .toggle-wrap -->
+                </div><!-- .nk-block-head-content -->
+            </div><!-- .nk-block-between -->
+        </div><!-- .nk-block-head -->
+        <div class="form-group">
+            <label class="form-label">Заголовок</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Введите название" aria-label="" aria-describedby="btnGroupAddon" value="{{ work.name }}" id="newstitle">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Фото</label>
+            <div class="form-control-wrap">
+                <div class="custom-file">
+                    <input type="file" multiple class="custom-file-input" id="picture-n" accept=".jpg,.jpeg,.png">
+                    <label class="custom-file-label" for="customFile">Выберите файл</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Дата</label>
+            <div class="form-control-wrap">
+                <div class="form-icon form-icon-right">
+                    <em class="icon ni ni-calendar-alt"></em>
+                </div>
+                <input type="text" class="form-control date-picker" value="{{ work.date|date:"m/d/Y" }}" id="pdate">
+            </div>
+            <div class="form-note">Формат: Месяц/День/Год</div>
+        </div>
+        <div class="form-group">
+            <div class="card card-bordered">
+                <div class="card-inner">
+                    <div class="summernote-basic">{{ work.text|safe }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group btns-d">
+            <button class="btn btn-primary btn-save"><em class="icon ni ni-save"></em><span>Изменить</span></button>
+        </div>
+
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        'use strict';
+        $(document).ready(function () {
+            var elText;
+            var _basic = '.summernote-basic';
+
+            if ($(_basic).exists()) {
+                $(_basic).each(function () {
+                    elText = $(this);
+                    $(this).summernote({
+                        placeholder: 'Hello stand alone ui',
+                        tabsize: 2,
+                        height: 500,
+                        toolbar: [['style', ['style']], ['font', ['bold', 'underline', 'strikethrough', 'clear']], ['font', ['superscript', 'subscript']], ['color', ['color']], ['fontsize', ['fontsize', 'height']], ['para', ['ul', 'ol', 'paragraph']], ['table', ['table']], ['insert', ['link', 'video']], ['view', ['fullscreen', 'codeview', 'help']]]
+                    });
+                });
+            }
+
+            $('.btns-d').on('click', '.btn-save',function()
+            {
+                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                var text = elText.summernote('code');
+                var title = document.getElementById('newstitle').value
+                var date = document.getElementById('pdate').value
+                var data = new FormData();
+                var img = $('#picture-n')[0].files[0];
+                data.append('img', img);
+                data.append('csrfmiddlewaretoken', csrftoken);
+                data.append('title', title);
+                data.append('text', text);
+                data.append('action', 'create');
+                data.append('date', date);
+                var ready = true;
+                if(ready){
+                    $.ajax
+                    ({
+                        data: data, // get the form data
+                        type: "POST", // GET or POST
+                        url: "{% url 'coach_team_homeworks_edit' team.pk work.pk %}",
+                        processData: false,
+                        contentType: false,
+                        // on success
+                        success: function (response)
+                        {
+                            window.location.replace('{% url 'coach_team_homeworks' team.pk %}');
+                        },
+                        // on error
+                        error: function (response)
+                        {
+                            Swal.fire("Ошибка", response.responseJSON.errors, "error");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

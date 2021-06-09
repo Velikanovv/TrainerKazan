@@ -1,0 +1,33 @@
+{% extends 'coach/_blank.html' %}
+{% load static %}
+
+{% block content %}
+    <form method="POST">{% csrf_token %}
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Новая команда</h3>
+                </div><!-- .nk-block-head-content -->
+                <div class="nk-block-head-content">
+                    <div class="toggle-wrap nk-block-tools-toggle">
+                        {% csrf_token %}
+                        <ul class="nk-block-tools g-3 ">
+                            <li class="nk-block-tools-opt"><a href="{% url 'coach_main' %}" class="btn btn-light"><em class="icon ni ni-back-alt"></em><span>Назад</span></a></li>
+                        </ul>
+                    </div><!-- .toggle-wrap -->
+                </div><!-- .nk-block-head-content -->
+            </div><!-- .nk-block-between -->
+        </div><!-- .nk-block-head -->
+        <div class="form-group">
+            <label class="form-label">Название</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Введите название" aria-label="" aria-describedby="btnGroupAddon" value="" id="newstitle" name="t_name">
+            </div>
+        </div>
+        <div class="form-group btns-d">
+            <button class="btn btn-primary btn-save" type="submit"><em class="icon ni ni-save"></em><span>Создать</span></button>
+        </div>
+    </div>
+    </form>
+{% endblock %}

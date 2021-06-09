@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <main class="player_card">
+        <header class="header">
+            <img src="img/header-bg.svg" alt="img">
+            <nav class="nav container">
+                <a href="#" class="nav__link">Мой путь</a>
+                <a href="#" class="nav__link">Задания</a>
+                <a href="#" class="nav__link active">Главная</a>
+                <a href="#" class="nav__link">Команда</a>
+                <a href="#" class="nav__link">Кабинет</a>
+            </nav>
+            <a href="#" class="btn">Войти</a>
+        </header>
+        <div class="wrapper container">
+            <div class="player big">
+                <div class="player__num">15</div>
+                <img src="img/player.png" class="player__img" alt="img">
+                <div class="player__title">
+                    <p class="player__name">Андрей <br> Андреевич</p>
+                    <ul class="player__descr">
+                        <li>ВЫН: 90</li>
+                        <li>ЛОВ: 79</li>
+                        <li>СИЛ: 89</li>
+                        <li>ГИБ: 90</li>
+                        <li>МЫШ: 79</li>
+                        <li>СКО: 89</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="main_info">
+                <p>ФИО: <b>Андреев Андрей Андреевич</b></p>
+                <p>Команда: <b>Название Команды</b></p>
+                <p>Номер: <b>15</b></p>
+                <p>Выполнено ДЗ: <b>35/40</b></p>
+            </div>
+            <div class="chart">
+                <canvas id="myChart" height="288"></canvas>
+            </div>
+            <div class="score">
+                <p class="score__heading">Показатели</p>
+                <div class="score__chart">
+                    <span class="score__chart-num">
+                        90<sup>%</sup>
+                    </span>
+                    <svg height="200" width="300">
+                        <circle stroke-dashoffset="400" />
+                    </svg>
+                </div>
+                </svg>
+                <div class="score-item">
+                    <div class="score-header">
+                        <span class="score-item__heading">Сила</span>
+                        <span class="score-item__num">50</span>
+                    </div>
+                    <div class="score-item__progress"><span style="width: 50%; background-color: red;"></span></div>
+                </div>
+                <div class="score-item">
+                    <div class="score-header">
+                        <span class="score-item__heading">Выносливость</span>
+                        <span class="score-item__num">80</span>
+                    </div>
+                    <div class="score-item__progress"><span style="width: 80%; background-color: orange;"></span></div>
+                </div>
+                <div class="score-item">
+                    <div class="score-header">
+                        <span class="score-item__heading">Скорость</span>
+                        <span class="score-item__num">90</span>
+                    </div>
+                    <div class="score-item__progress"><span style="width: 90%;"></span></div>
+                </div>
+            </div>
+            <div class="score">
+                <p class="score__heading">Показатели</p>
+                <div class="score__chart">
+                    <span class="score__chart-num">
+                        50<sup>%</sup>
+                    </span>
+                    <svg height="200" width="300">
+                        <circle stroke-dashoffset="505" />
+                    </svg>
+                </div>
+                <div class="score-item">
+                    <div class="score-header">
+                        <span class="score-item__heading">Сила</span>
+                        <span class="score-item__num">50</span>
+                    </div>
+                    <div class="score-item__progress"><span style="width: 50%; background-color: red;"></span></div>
+                </div>
+                <div class="score-item">
+                    <div class="score-header">
+                        <span class="score-item__heading">Выносливость</span>
+                        <span class="score-item__num">80</span>
+                    </div>
+                    <div class="score-item__progress"><span style="width: 80%; background-color: orange;"></span></div>
+                </div>
+                <div class="score-item">
+                    <div class="score-header">
+                        <span class="score-item__heading">Скорость</span>
+                        <span class="score-item__num">90</span>
+                    </div>
+                    <div class="score-item__progress"><span style="width: 90%;"></span></div>
+                </div>
+            </div>
+            <div class="score">
+                <p class="score__heading">Показатели</p>
+                <div class="score__chart">
+                    <span class="score__chart-num">
+                        40<sup>%</sup>
+                    </span>
+                    <svg height="200" width="300">
+                        <circle stroke-dashoffset="550" />
+                    </svg>
+                </div>
+                <div class="score-item">
+                    <div class="score-header">
+                        <span class="score-item__heading">Сила</span>
+                        <span class="score-item__num">50</span>
+                    </div>
+                    <div class="score-item__progress"><span style="width: 50%; background-color: red;"></span></div>
+                </div>
+                <div class="score-item">
+                    <div class="score-header">
+                        <span class="score-item__heading">Выносливость</span>
+                        <span class="score-item__num">80</span>
+                    </div>
+                    <div class="score-item__progress"><span style="width: 80%; background-color: orange;"></span></div>
+                </div>
+                <div class="score-item">
+                    <div class="score-header">
+                        <span class="score-item__heading">Скорость</span>
+                        <span class="score-item__num">90</span>
+                    </div>
+                    <div class="score-item__progress"><span style="width: 90%;"></span></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>

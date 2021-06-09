@@ -1,0 +1,472 @@
+@import 'normolize'
+*
+    padding: 0
+    margin: 0
+    box-sizing: border-box
+    border: none
+    outline: none
+
+@import 'elements'
+@import 'menu'
+@import 'header'
+@import 'modal'
+
+main
+    min-height: 100vh
+    background-repeat: no-repeat
+    background-size: cover
+    background-position: center center
+    background-attachment: fixed
+    padding-bottom: 100px
+    position: relative
+    z-index: 1
+    &::before
+        content: ''
+        display: block
+        width: 100%
+        height: 100%
+        position: absolute
+        z-index: -1
+        top: 0
+        left: 0
+        background: linear-gradient(97.15deg, rgba(80, 202, 255, 0.1056) 3.35%, rgba(85, 255, 194, 0.099) 97.56%)
+
+.games,
+.task
+    background-image: url('../img/bg_2.jpg')
+    .wrapper
+        justify-content: center
+
+.task
+    .container
+        max-width: 1600px
+    p
+        max-width: 1400px
+        font-weight: normal
+        font-size: 18px
+        line-height: 169.4%
+        text-align: center
+        letter-spacing: 0.09em
+        color: #FFFFFF
+        margin: 0 auto 80px
+    &-item
+        min-width: 250px
+        padding: 22px 10px 22px 95px
+        background: #FFFFFF
+        border-radius: 138px
+        position: relative
+        z-index: 1
+        font-weight: bold
+        font-size: 24px
+        line-height: 29px
+        color: #000
+        margin: 0 15px 30px
+        &:hover
+            opacity: 1
+            transform: translateY(-10px)
+        &::before
+            content: ''
+            display: inline-block
+            width: 58px
+            height: 58px
+            background-size: contain
+            background-image: url('../img/ball_deff.svg')
+            background-repeat: no-repeat
+            background-position: center center
+            position: absolute
+            z-index: 1
+            top: 50%
+            left: 14px
+            transform: translateY(-50%)
+        &.active
+            &::before
+                background-image: url('../img/ball_active.svg')
+
+.game
+    background-image: url('../img/game-bg.jpg')
+    background-repeat: no-repeat
+    background-position: center center
+    background-size: cover
+    color: #000
+    display: flex
+    width: 580px
+    align-items: center
+    padding: 25px
+    border-radius: 20px
+    margin: 0 14px 40px
+    transition: all ease .3s
+    &:hover
+        opacity: 1
+        transform: translateY(-10px)
+    img
+        border-radius: 20px
+        width: 180px
+        height: 170px
+        object-fit: cover
+    &-title
+        padding-left: 20px
+    &__heading
+        text-transform: uppercase
+        font-weight: bold
+        font-size: 20px
+        line-height: 120%
+        margin-bottom: 8px
+    &__descr
+        font-weight: 500
+        font-size: 14px
+        line-height: 140%
+        margin-bottom: 10px
+    &__rate
+        height: 34px
+        width: 180px
+        background-image: url('../img/star_deff.svg')
+        background-size: contain
+        position: relative
+        z-index: 1
+        &::before
+            content: ''
+            background-image: url('../img/star_active.svg')
+            background-size: contain
+            display: block
+            width: 0
+            height: 100%
+            position: absolute
+            top: 0
+            left: 0
+        &.r_1
+            &::before
+                width: 20%
+        &.r_2
+            &::before
+                width: 40%
+        &.r_3
+            &::before
+                width: 60%
+        &.r_4
+            &::before
+                width: 80%
+        &.r_5
+            &::before
+                width: 100%
+
+.players,
+.player_card,
+.form_section
+    background-image: url('../img/bg_1.jpg')
+    .wrapper
+        justify-content: center
+.player_card
+    .wrapper
+        align-items: unset
+    .main_info
+        // width: 570px
+        padding: 34px 50px 34px 40px
+        background-color: #fff
+        border-radius: 15px
+        color: #000
+        margin-bottom: 50px
+        p
+            font-weight: 500
+            font-size: 19px
+            line-height: 130%
+            letter-spacing: 0.1em
+            color: #858585
+            margin-bottom: 20px
+        b, strong
+            color: #000
+            font-weight: bold
+    .chart
+        border-radius: 15px
+        background-color: #fff
+        margin: 0 30px 50px
+        padding: 16px
+        display: flex
+        align-items: center
+        #myChart
+            width: 100%
+            height: 100%
+
+    .score
+        width: 31%
+        background-color: #fff
+        border-radius: 15px
+        color: #000
+        padding: 30px 30px
+        margin: 0 10px 50px
+        &__chart
+            width: 100%
+            height: 100px
+            overflow: hidden
+            position: relative
+            z-index: 1
+            margin-bottom: 26px
+            &::before
+                content: ''
+                display: block
+                position: absolute
+                z-index: -1
+                top: 0
+                left: 50%
+                transform: translateX(-50%)
+                width: 200px
+                height: 200px
+                border: 10px solid #cecece
+                border-radius: 50%
+            &-num
+                position: absolute
+                bottom: 0
+                width: 100%
+                text-align: center
+                font-size: 40px
+                font-weight: 600
+                color: green
+            svg
+                display: block
+                width: 100%
+                margin: 0 auto
+                circle
+                    stroke-dasharray: 1000
+                    fill: transparent
+                    stroke: green
+                    transition: all ease .3s
+                    cx: 50%
+                    cy: 109px
+                    r: 104px
+                    stroke-width: 10px
+
+        &__heading
+            text-align: center
+            font-size: 30px
+            font-weight: bold
+            margin-bottom: 20px
+        &-header
+            display: block
+            width: 100%
+            padding: 0 5px
+            margin-bottom: 14px
+            span
+                font-size: 18px
+                font-weight: 400
+        &-item
+            margin-bottom: 26px
+            &__num
+                float: right
+            &__progress
+                width: 100%
+                height: 10px
+                border-radius: 10px
+                background-color: #e4e4e4
+                position: relative
+                z-index: 1
+                span
+                    border-radius: 10px
+                    display: block
+                    position: absolute
+                    top: 0
+                    left: 0
+                    height: 100%
+                    background-color: green
+
+.player
+    display: block
+    background-image: url('../img/card_bg.jpg')
+    background-repeat: no-repeat
+    background-position: center center
+    background-size: cover
+    width: 270px
+    min-width: 270px
+    height: 360px
+    border-radius: 28px
+    position: relative
+    z-index: 1
+    overflow: hidden
+    margin: 0 30px 50px
+    &:hover
+        opacity: 1
+    &::before
+        content: ''
+        display: block
+        width: 100%
+        height: 100%
+        position: absolute
+        top: 0
+        left: 0
+        z-index: 50
+        background: linear-gradient(180deg, rgba(0, 0, 0, .2) 44.56%, rgba(0, 0, 0, 0.7) 63.57%, #000000 100%)
+    &__num
+        position: absolute
+        z-index: 1000
+        top: 24px
+        left: 30px
+        font-weight: bold
+        font-size: 52px
+        line-height: 78px
+    &__img
+        position: absolute
+        z-index: 1
+        top: 10px
+        left: 50%
+        transform: translateX(-45%)
+        height: 120%
+    &__title
+        position: absolute
+        z-index: 100
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        display: flex
+        flex-direction: column
+        justify-content: flex-end
+        align-items: center
+        padding-top: 100px
+        padding-bottom: 40px
+        ul
+            display: flex
+            flex-wrap: wrap
+            justify-content: space-between
+            li
+                min-width: 45%
+                font-weight: 600
+                font-size: 14px
+                line-height: 150%
+                &:nth-child(odd)
+                    text-align: right
+    &__name
+        width: 100%
+        font-weight: bold
+        font-size: 24px
+        line-height: 140%
+        text-align: center
+        display: block
+        margin-bottom: 16px
+
+.form_section
+    color: #000
+    .form__wrap
+        max-width: 700px
+        padding: 50px 15px
+        background-color: #fff
+        border-radius: 10px
+        min-height: 200px
+    form
+        max-width: 600px
+        margin: 0 auto
+        .btn
+            min-width: 280px
+            margin: 0 0 0 auto
+            display: block
+            padding: 18px 40px
+            text-align: center
+            color: #fff
+            font-weight: 600
+            background-color: #25E873
+            font-size: 18px
+            border-radius: 30px
+            transition: all ease .2s
+
+@media screen and ( max-width: 1440px )
+    .task
+        p
+            max-width: 1100px
+            font-size: 15px
+            margin-bottom: 60px
+
+@media screen and ( max-width: 1040px )
+    .player_card
+        .chart
+            width: 300px
+            margin: 0 10px 30px
+        .score
+            margin: 0 10px 30px
+            width: 300px
+            &-header
+                span
+                    font-size: 16px
+            &__heading
+                font-size: 26px
+        .main_info
+            width: 100%
+            margin-bottom: 30px
+
+@media screen and ( max-width: 600px )
+    .player:not(.big)
+        width: 47%
+        border-radius: 18px
+        height: 280px
+        min-width: unset
+        margin: 0 auto 30px
+        .player
+            &__num
+                top: 4px
+                left: 17px
+                font-size: 38px
+            &__name
+                font-size: 18px
+                line-height: 130%
+                margin-bottom: 12px
+            &__title
+                ul
+                    li
+                        font-size: 12px
+
+    .games
+        .wrapper
+            padding: 0 15px
+    .game
+        display: block
+        width: 100%
+        min-width: 120px
+        height: unset
+        padding: 20px 20px 30px
+        border-radius: 14px
+        margin: 0 4px 30px
+        img
+            width: 100%
+            height: unset
+            margin-bottom: 14px
+            border-radius: 10px
+        &-title
+            padding: 0
+
+    .task
+        .container
+            padding: 0 10px
+        .wrapper
+            justify-content: space-around
+        &-item
+            width: 47%
+            max-width: 190px
+            min-width: 150px
+            padding: 16px 10px 16px 66px
+            font-size: 16px
+            line-height: 29px
+            margin: 0 2px 30px
+            &::before
+                width: 40px
+                height: 40px
+
+    .player_card
+        .player.big
+            width: 290px
+            height: 380px
+            margin: 0 auto 30px
+        .main_info
+            width: 100%
+            padding: 30px 20px
+            p
+                font-size: 16px
+                line-height: 150%
+        .chart
+            width: 100%
+            padding: 30px 20px
+        .score
+            width: 100%
+
+    .form_section
+        .form__wrap
+            max-width: 92%
+
+    .inp
+        &-label
+            font-size: 16px

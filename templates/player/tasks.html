@@ -1,0 +1,24 @@
+{% extends 'player/_blank.html' %}
+{% load static %}
+{% block title %}Мой путь{% endblock %}
+{% block type %}games{% endblock %}
+{% block main %}
+    <div class="wrapper">
+    {% for lesson in lessons %}
+        <a href="{% url 'player_way' lesson.pk %}" class="game">
+            <img src="{{ lesson.pic.url }}" alt="img">
+            <div class="game-title">
+                <h3 class="game__heading">{{ lesson.name }}</h3>
+                <p class="game__descr">
+                    {{ lesson.description|truncatechars:146 }}
+                </p>
+                {% for r in ratings %}
+                    {% if r.block == lesson %}
+                        <div class="game__rate r_{{ r.rating }}"></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </a>
+    {% endfor %}
+    </div>
+{% endblock %}

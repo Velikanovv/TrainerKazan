@@ -1,0 +1,18 @@
+{% extends 'player/_blank.html' %}
+{% load static %}
+{% block title %}{{ lesson.name }}{% endblock %}
+{% block type %}task{% endblock %}
+{% block main %}
+        <div class="container">
+            <h1 class="title-heading">{{ lesson.name }}</h1>
+            <p>
+                {{ lesson.description }}
+            </p>
+            <h2 class="title-heading">УРОКИ</h2>
+            <div class="wrapper">
+                {% for lsn in lessons %}
+                <a class="task-item {% if user in lsn.done.all %}active{% endif %}">{{ lsn.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+{% endblock %}

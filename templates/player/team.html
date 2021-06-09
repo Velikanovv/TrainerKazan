@@ -1,0 +1,22 @@
+{% extends 'player/_blank.html' %}
+{% load static %}
+{% block title %}Команда{% endblock %}
+{% block type %}players{% endblock %}
+{% block main %}
+    <div class="wrapper">
+        {% for usr in team.users.all %}
+            <a href="{% url 'player_p' usr.pk %}" class="player">
+                <div class="player__num">{{ usr.player_number }}</div>
+                <img src="{{ usr.pic.url }}" class="player__img" alt="img">
+                <div class="player__title">
+                    <p class="player__name">{{ usr.name }}<br>{{ usr.surname }}</p>
+                    <ul class="player__descr">
+                        {% for st in usr.main_statics.all %}
+                            <li>{{ st.block.name|slice:":3"|upper }}: {{ st.result.normalize }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,345 @@
+
+.footer
+    overflow: hidden
+    background: #FBFAF3
+    padding: 75px 0 30px
+    .container
+        max-width: 1400px
+
+    &-row
+        display: -webkit-box
+        display: -ms-flexbox
+        display: flex
+        -webkit-box-pack: justify
+        -ms-flex-pack: justify
+        justify-content: space-between
+        -webkit-box-align: center
+        -ms-flex-align: center
+        align-items: center
+
+        &.first
+            margin-bottom: 70px
+
+        &.second
+            margin-bottom: 60px
+
+            a, address
+                font-weight: normal
+                font-style: normal
+                font-size: 30px
+                line-height: 150%
+                text-align: center
+                letter-spacing: 0.03em
+                color: #3A464F
+                -webkit-transition: all ease .3s
+                -o-transition: all ease .3s
+                transition: all ease .3s
+                &:hover
+                    color: #FFDB5B
+
+            address
+                text-align: center
+                max-width: 350px
+                font-style: normal
+                &:hover
+                    color: #FFDB5B
+
+        &.third
+            span
+                font-weight: 300
+                font-size: 16px
+                line-height: 150%
+                text-align: center
+                letter-spacing: 0.05em
+                color: #86929B
+
+            a
+                font-weight: 300
+                font-size: 16px
+                line-height: 150%
+                text-align: center
+                letter-spacing: 0.05em
+                color: #86929B
+
+                &:hover
+                    color: #FFDB5B
+
+    .logo
+        &-wrap
+            display: flex
+            align-items: center
+        &__text
+            font-style: normal
+            font-weight: bold
+            font-size: 36px
+            line-height: 150%
+            color: #86929B
+            position: relative
+            margin-right: 30px
+            &::before
+                content: ''
+                display: block
+                width: 2px
+                height: 100px
+                position: absolute
+                background: linear-gradient(157.06deg, #FFDB5B 0%, #E6AC0D 100%)
+                position: absolute
+                top: 50%
+                left: -30px
+                transform: translateY(-50%)
+
+    .col
+        display: -webkit-box
+        display: -ms-flexbox
+        display: flex
+        -webkit-box-align: center
+        -ms-flex-align: center
+        align-items: center
+        -webkit-box-pack: justify
+        -ms-flex-pack: justify
+        justify-content: space-between
+
+    .form
+        position: relative
+        &-text
+            max-width: 186px
+            font-weight: 300
+            font-size: 20px
+            line-height: 150%
+            display: -webkit-box
+            display: -ms-flexbox
+            display: flex
+            -webkit-box-align: center
+            -ms-flex-align: center
+            align-items: center
+            letter-spacing: 0.03em
+            color: #86929B
+        input
+            font-size: 16px
+            color: #86929B
+            font-weight: bold
+            padding: 0 180px 0 30px
+            width: 420px
+            background: #FFFFFF
+            height: 64px
+            -webkit-box-shadow: 0px 4px 30px rgba(176, 175, 174, 0.25)
+            box-shadow: 0px 4px 30px rgba(176, 175, 174, 0.25)
+            border-radius: 50px
+        .submit
+            font-weight: bold
+            font-size: 20px
+            line-height: 24px
+            width: 174px
+            height: 64px
+            background-color: transparent
+            color: #279293
+            border: 2px solid #279293
+            border-radius: 50px
+            position: absolute
+            top: 0
+            right: 0
+            -webkit-transition: all ease .2s
+            -o-transition: all ease .2s
+            transition: all ease .2s
+
+            &:hover
+                border-width: 3px
+
+            &:active
+                -webkit-box-shadow: inset 0px 4px 10px #279293
+                box-shadow: inset 0px 4px 10px #279293
+
+    nav
+        display: -webkit-box
+        display: -ms-flexbox
+        display: flex
+        -webkit-box-pack: center
+        -ms-flex-pack: center
+        justify-content: center
+        -webkit-box-align: center
+        -ms-flex-align: center
+        align-items: center
+        margin-bottom: 60px
+        a
+            display: block
+            font-style: normal
+            font-weight: 400
+            font-size: 20px
+            line-height: 150%
+            color: #86929B
+            margin: 0 35px
+
+            &:hover
+                color: #FFDB5B
+
+@media screen and (max-width: 1440px)
+    .footer
+        .container
+            max-width: 1200px
+
+        .logo
+            &__text
+                font-size: 28px
+                &::before
+                    left: -22px
+                    height: 70px
+
+        &-row
+            &.second
+                a
+                    font-size: 26px
+                    line-height: 130%
+
+                address
+                    line-height: 130%
+                    max-width: 250px
+        nav a
+            margin: 0 25px
+
+        .btn-2
+            padding: 13px 30px
+
+        .form
+            input
+                height: 50px
+
+            .submit
+                width: 150px
+                height: 50px
+                font-size: 17px
+            &-text
+                display: block
+                font-size: 17px
+                text-align: center
+                margin: 0 auto 5px
+                max-width: 100%
+
+        .col
+            display: block
+
+@media screen and (max-width: 1100px)
+    .footer
+        padding: 80px 0 30px
+
+        &-row
+            &.first
+                display: block
+                margin: 0 auto 20px
+
+            &.second
+                max-width: 650px
+                margin: 0 auto 60px
+
+                a
+                    font-size: 20px
+
+                address
+                    max-width: 100%
+
+        nav
+            margin-bottom: 60px
+
+            a
+                font-size: 18px
+
+        .logo-wrap
+            max-width: 470px
+            margin: 0 auto 40px
+
+        .col
+            max-width: 420px
+            margin: 0 auto 40px
+
+        .form input
+            padding-right: 156px
+
+@media screen and (max-width: 700px)
+    .footer
+        .logo
+            margin: 0 auto 52px
+            &-wrap
+                display: block
+            &__text
+                display: block
+                text-align: center
+                margin: 0 0 25px
+
+                &::before
+                    width: 100px
+                    height: 2px
+                    top: -25px
+                    left: 50%
+                    -webkit-transform: translateX(-50%)
+                    -ms-transform: translateX(-50%)
+                    transform: translateX(-50%)
+
+        .btn-2
+            display: block
+            width: 100%
+            max-width: 290px
+            margin: 0 auto
+
+        .col
+            display: block
+
+        .form
+            &-text
+                display: block
+                text-align: center
+                max-width: 100%
+                margin-bottom: 15px
+            input
+                width: 100%
+                font-size: 14px
+                padding-right: 124px
+                padding-left: 20px
+                height: 47px
+
+            .submit
+                height: 47px
+                width: 120px
+                padding: 0 20px
+                font-size: 14px
+                line-height: 17px
+
+        &-row
+            display: block
+            max-width: 400px
+
+            &.second
+                a
+                    font-size: 22px
+                    line-height: 150%
+                    margin-bottom: 30px
+                    display: block
+                    text-align: center
+
+                address
+                    max-width: 190px
+                    margin: 0 auto
+
+            &.third
+                display: -webkit-box
+                display: -ms-flexbox
+                display: flex
+                -webkit-box-orient: vertical
+                -webkit-box-direction: normal
+                -ms-flex-direction: column
+                flex-direction: column
+                margin: 0 auto
+
+                span
+                    -webkit-box-ordinal-group: 4
+                    -ms-flex-order: 3
+                    order: 3
+
+        nav
+            -ms-flex-wrap: wrap
+            flex-wrap: wrap
+            text-align: center
+            max-width: 400px
+            margin: 0 auto 20px
+
+            a
+                margin: 0 auto 30px
+                width: 30%

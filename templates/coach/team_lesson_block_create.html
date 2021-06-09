@@ -1,0 +1,92 @@
+{% extends 'coach/_blank.html' %}
+{% load static %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Новый блок уроков</h3>
+                </div><!-- .nk-block-head-content -->
+                <div class="nk-block-head-content">
+                    <a href="{% url 'coach_team_lessons_blocks' team.pk %}" class="btn btn-light"><em class="icon ni ni-back-alt"></em><span>Назад</span></a>
+                </div><!-- .nk-block-head-content -->
+            </div><!-- .nk-block-between -->
+        </div><!-- .nk-block-head -->
+        <div class="form-group">
+            <label class="form-label">Название</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" value="" id="t_name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Описание</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" value="" id="t_descr">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Кол-во уроков</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="btnGroupAddon" value="" id="t_count">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Фото</label>
+            <div class="form-control-wrap">
+                <div class="custom-file">
+                    <input type="file" multiple class="custom-file-input" id="picture-n" accept=".jpg,.jpeg,.png">
+                    <label class="custom-file-label" for="customFile">Выберите файл</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group btns-d">
+            <button class="btn btn-primary btn-save"><em class="icon ni ni-save"></em><span>Создать</span></button>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        'use strict';
+        $(document).ready(function () {
+
+            $('.btns-d').on('click', '.btn-save',function()
+            {
+                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                var name = document.getElementById('t_name').value
+                var descr = document.getElementById('t_descr').value
+                var count = document.getElementById('t_count').value
+                var data = new FormData();
+                var img = $('#picture-n')[0].files[0];
+                data.append('csrfmiddlewaretoken', csrftoken);
+                data.append('name', name);
+                data.append('descr', descr);
+                data.append('count', count);
+                data.append('img', img);
+                data.append('action', 'create');
+                var ready = true;
+                if(ready){
+                    $.ajax
+                    ({
+                        data: data, // get the form data
+                        type: "POST", // GET or POST
+                        url: "{% url 'coach_team_lessons_blocks_create' team.pk %}",
+                        processData: false,
+                        contentType: false,
+                        // on success
+                        success: function (response)
+                        {
+                            window.location.replace('{% url 'coach_team_lessons_blocks' team.pk %}');
+                        },
+                        // on error
+                        error: function (response)
+                        {
+                            Swal.fire("Ошибка", response.responseJSON.errors, "error");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

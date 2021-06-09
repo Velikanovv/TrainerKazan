@@ -1,0 +1,88 @@
+{% extends 'coach/_blank.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Награда</h3>
+                </div><!-- .nk-block-head-content -->
+                <div class="nk-block-head-content">
+                    <div class="toggle-wrap nk-block-tools-toggle">
+                        {% csrf_token %}
+                        <ul class="nk-block-tools g-3 ">
+                            <li class="nk-block-tools-opt"><a href="{% url 'coach_rewards' %}" class="btn btn-light"><em class="icon ni ni-back-alt"></em><span>Назад</span></a></li>
+                        </ul>
+                    </div><!-- .toggle-wrap -->
+                </div><!-- .nk-block-head-content -->
+            </div><!-- .nk-block-between -->
+        </div><!-- .nk-block-head -->
+        <div class="form-group">
+            <label class="form-label">Заголовок</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Введите название" aria-label="" aria-describedby="btnGroupAddon" value="{{ reward.name }}" id="newstitle">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Фото</label>
+            <div class="form-control-wrap">
+                <div class="user-card">
+                    <div class="user-avatar">
+                        <img src="{{ reward.pic_small.url }}" alt="">
+                    </div>
+                    <div class="user-info">
+                        <div class="custom-file">
+                            <input type="file" multiple class="custom-file-input" id="picture-n" accept=".jpg,.jpeg,.png">
+                            <label class="custom-file-label" for="customFile" data-value="">Выберите файл</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group btns-d">
+            <button class="btn btn-primary btn-save"><em class="icon ni ni-edit"></em><span>Изменить</span></button>
+        </div>
+
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        'use strict';
+        $(document).ready(function () {
+
+            $('.btns-d').on('click', '.btn-save',function()
+            {
+                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                var title = document.getElementById('newstitle').value
+                var data = new FormData();
+                var img = $('#picture-n')[0].files[0];
+                data.append('img', img);
+                data.append('csrfmiddlewaretoken', csrftoken);
+                data.append('title', title);
+                data.append('action', 'create');
+                var ready = true;
+                if(ready){
+                    $.ajax
+                    ({
+                        data: data, // get the form data
+                        type: "POST", // GET or POST
+                        url: "{% url 'coach_rewards_edit' reward.pk %}",
+                        processData: false,
+                        contentType: false,
+                        // on success
+                        success: function (response)
+                        {
+                            window.location.replace('{% url 'coach_rewards' %}');
+                        },
+                        // on error
+                        error: function (response)
+                        {
+                            Swal.fire("Ошибка", response.errors, "error");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

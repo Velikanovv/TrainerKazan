@@ -1,0 +1,133 @@
+{% extends 'coach/_blank.html' %}
+{% load static %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Изменить</h3>
+                </div><!-- .nk-block-head-content -->
+                <div class="nk-block-head-content">
+                    <a href="{% url 'coach_team' team.pk %}" class="btn btn-light"><em class="icon ni ni-back-alt"></em><span>Назад</span></a>
+                </div><!-- .nk-block-head-content -->
+            </div><!-- .nk-block-between -->
+        </div><!-- .nk-block-head -->
+        <div class="form-group">
+            <label class="form-label">Логин</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Введите логин" aria-label="" aria-describedby="btnGroupAddon" value="{{ usr.username }}" id="t_login">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Имя</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Введите Имя" aria-label="" aria-describedby="btnGroupAddon" value="{{ usr.name }}" id="t_name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Фамилия</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Введите Фамилия" aria-label="" aria-describedby="btnGroupAddon" value="{{ usr.surname }}" id="t_surname">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Отчество</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Введите Отчество" aria-label="" aria-describedby="btnGroupAddon" value="{{ usr.patronymic }}" id="t_patronymic">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Номер игрока</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Введите номер" aria-label="" aria-describedby="btnGroupAddon" value="{{ usr.player_number }}" id="t_number">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">День Рождения</label>
+            <div class="form-control-wrap">
+                <div class="form-icon form-icon-right">
+                    <em class="icon ni ni-calendar-alt"></em>
+                </div>
+                <input type="text" class="form-control date-picker" value="{{ usr.birthday|date:"m/d/Y" }}" id="t_date">
+            </div>
+            <div class="form-note">Формат: Месяц/День/Год</div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Пароль</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Введите пароль" aria-label="" aria-describedby="btnGroupAddon" value="{{ usr.c_pass }}" id="t_password">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Фото</label>
+            <div class="user-card">
+                <div class="user-avatar bg-danger" style="margin-right: 5px;">
+                    <img src="{{ usr.pic_small.url }}" alt="">
+                </div>
+                <div class="form-control-wrap">
+                    <div class="custom-file">
+                        <input type="file" multiple class="custom-file-input" id="picture-n" accept=".jpg,.jpeg,.png">
+                        <label class="custom-file-label" for="customFile">Выберите файл</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group btns-d">
+            <button class="btn btn-primary btn-save"><em class="icon ni ni-save"></em><span>Изменить</span></button>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        'use strict';
+        $(document).ready(function () {
+
+            $('.btns-d').on('click', '.btn-save',function()
+            {
+                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                var login = document.getElementById('t_login').value
+                var name = document.getElementById('t_name').value
+                var surname = document.getElementById('t_surname').value
+                var patronymic = document.getElementById('t_patronymic').value
+                var password = document.getElementById('t_password').value
+                var date = document.getElementById('t_date').value
+                var number = document.getElementById('t_number').value
+                var data = new FormData();
+                var img = $('#picture-n')[0].files[0];
+                data.append('csrfmiddlewaretoken', csrftoken);
+                data.append('login', login);
+                data.append('name', name);
+                data.append('surname', surname);
+                data.append('patronymic', patronymic);
+                data.append('password', password);
+                data.append('img', img);
+                data.append('date', date);
+                data.append('number', number);
+                data.append('action', 'create');
+                var ready = true;
+                if(ready){
+                    $.ajax
+                    ({
+                        data: data, // get the form data
+                        type: "POST", // GET or POST
+                        url: "{% url 'coach_team_users_edit' team.pk usr.pk %}",
+                        processData: false,
+                        contentType: false,
+                        // on success
+                        success: function (response)
+                        {
+                            window.location.replace('{% url 'coach_team' team.pk %}');
+                        },
+                        // on error
+                        error: function (response)
+                        {
+                            Swal.fire("Ошибка", response.responseJSON.errors, "error");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

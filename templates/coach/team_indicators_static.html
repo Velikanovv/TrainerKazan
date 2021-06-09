@@ -1,0 +1,55 @@
+{% extends 'coach/_team_blank.html' %}
+{% load static %}
+
+{% block teamcontent %}
+    {% csrf_token %}
+    <div class="nk-block">
+    </div>
+    {% for usr in users %}
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">{{ usr.surname|title }} {{ usr.name|title }} {{ usr.patronymic|title }}</h3>
+                    <div class="nk-block-des text-soft">
+                        <p></p>
+                    </div>
+                </div><!-- .nk-block-head-content -->
+            </div><!-- .nk-block-between -->
+        </div><!-- .nk-block-head -->
+
+        {% for mstat in usr.main_statics.all %}
+            {% if mstat.block.indicators_exercise.count != 0 %}
+        <div class="nk-block">
+            <div class="card card-bordered card-stretch">
+                <div class="card-inner-group">
+                    <div class="card-inner p-0">
+                        <div class="nk-tb-list nk-tb-ulist is-compact">
+                            <div class="nk-tb-item nk-tb-head">
+                                <div class="nk-tb-col"><span class="sub-text tb-lead">{{ mstat.block.name }}</span></div>
+                                <div class="nk-tb-col"><span class="sub-text tb-lead">{{ mstat.result.normalize }}</span></div>
+                            </div><!-- .nk-tb-item -->
+                            {% for stat in usr.ex_statics.all %}
+                                {% if stat.indicator.block == mstat.block %}
+                                <div class="nk-tb-item">
+                                    <div class="nk-tb-col">
+                                        <div class="user-card">
+                                            <span class="">{{ stat.indicator.name }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="nk-tb-col">
+                                        <span>{{ stat.result.normalize }}</span>
+                                    </div>
+                                </div><!-- .nk-tb-item -->
+                                {% endif %}
+                            {% endfor %}
+                        </div><!-- .nk-tb-list -->
+                    </div><!-- .card-inner -->
+                </div><!-- .card-inner-group -->
+            </div><!-- .card -->
+        </div><!-- .nk-block -->
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
+{% block scripts %}
+{% endblock %}

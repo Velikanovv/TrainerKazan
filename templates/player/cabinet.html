@@ -1,0 +1,62 @@
+{% extends 'player/_blank.html' %}
+{% load static %}
+{% block title %}Кабинет{% endblock %}
+{% block type %}form_section{% endblock %}
+{% block main %}
+    {% if error == "yes" %}
+    <div class="container form__wrap">
+        <h2 class="title-subheading">Ошибка</h2>
+        <p>{{ errort }}</p>
+    </div>
+    <br>
+    {% endif %}
+    <div class="container form__wrap">
+        <h2 class="title-subheading">Изменить данные</h2>
+        <form method="POST">{% csrf_token %}
+            <div class="inp-wrap">
+                <p class="inp-label">Фамилия</p>
+                <input type="text" placeholder="Фамилия" value="{{ user.surname }}"  name="surname">
+            </div>
+            <div class="inp-wrap">
+                <p class="inp-label">Имя</p>
+                <input type="text" placeholder="Имя" value="{{ user.name }}"  name="name">
+            </div>
+            <div class="inp-wrap">
+                <p class="inp-label">Отчество</p>
+                <input type="text" placeholder="Отчество" value="{{ user.patronymic }}"  name="patronymic">
+            </div>
+            <button class="btn" type="submit">Изменить</button>
+            <input type="hidden" name="action" value="data">
+        </form>
+    </div>
+
+    <br>
+
+    <div class="container form__wrap">
+        <h2 class="title-subheading">Изменить фото</h2>
+        <form enctype="multipart/form-data" method="POST">{% csrf_token %}
+            <div class="inp-wrap inp-file">
+                <p class="inp-label">Фото</p>
+                <input type="file"  name="img">
+            </div>
+            <button class="btn" type="submit">Изменить</button>
+            <input type="hidden" name="action" value="photo">
+        </form>
+    </div>
+    <br>
+    <div class="container form__wrap">
+        <h2 class="title-subheading">Изменить пароль</h2>
+        <form method="POST">{% csrf_token %}
+            <div class="inp-wrap">
+                <p class="inp-label">Пароль</p>
+                <input type="password" placeholder="" name="pass">
+            </div>
+            <div class="inp-wrap">
+                <p class="inp-label">Повторите пароль</p>
+                <input type="password" placeholder=""  name="pass2">
+            </div>
+            <button class="btn" type="submit">Изменить</button>
+            <input type="hidden" name="action" value="pass">
+        </form>
+    </div>
+{% endblock %}

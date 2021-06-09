@@ -1,0 +1,30 @@
+{% extends 'player/_blank.html' %}
+{% load static %}
+{% block title %}Задания{% endblock %}
+{% block type %}games{% endblock %}
+{% block main %}
+    <div class="wrapper">
+        {% for hw in homeworks %}
+            <a href="{% url 'player_homework' hw.pk %}" class="game">
+                <img src="{{ hw.pic.url }}" alt="img">
+                <div class="game-title">
+                    <h3 class="game__heading">{{ hw.name }}</h3>
+                    {% if usr in hw.done.all %}
+                    <p class="game__descr">
+                        Выполнено
+                    </p>
+                        {% for dhw in done_hw %}
+                            {% if dhw.user == usr and dhw.homework == hw %}
+                            <div class="game__rate r_{{ dhw.rating }}"></div>
+                            {% endif %}
+                        {% endfor %}
+                        {% else %}
+                        <p class="game__descr">
+                            Не выполнено
+                        </p>
+                    {% endif %}
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

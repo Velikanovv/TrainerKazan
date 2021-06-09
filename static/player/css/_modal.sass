@@ -1,0 +1,219 @@
+.modal
+    display: none
+    position: fixed
+    top: 0
+    left: 0
+    height: 100%
+    width: 100%
+    z-index: 8000000
+    // background-color: rgba(#FBFAF3, .9)
+    background-color: rgba(#6a6a6a, .7)
+    padding: 0 15px
+    box-sizing: border-box
+    &-content
+        overflow-y: scroll
+        max-height: 100vh
+        width: 88%
+        display: block
+        max-width: 1050px
+        background-color: #fff
+        // box-shadow: 0px 2px 37px rgba(0, 0, 0, 0.88)
+        border-radius: 20px
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+        padding: 90px 120px
+        &::-webkit-scrollbar
+            width: 0
+            height: 0
+        .modalClose
+            display: block
+            position: absolute
+            top: -34px
+            right: -34px
+            transform: none
+            background-color: transparent
+            img
+                max-width: 34px
+            &:hover
+                opacity: 0.9
+        h4
+            font-weight: 300
+            font-size: 40px
+            line-height: 150%
+            margin-bottom: 60px
+            &.center
+                text-align: center
+        form
+            display: flex
+            flex-wrap: wrap
+            align-items: flex-start
+        .inp-wrap
+            width: 50%
+            max-width: 316px
+            margin-bottom: 30px
+            margin-right: 40px
+            &.wide
+                width: 100%
+                max-width: 100%
+                margin-bottom: 60px
+            input,
+            textarea
+                border-bottom: 1px solid #3A464F
+                resize: none
+                padding: 0 12px
+                width: 100%
+                height: 50px
+                // margin-bottom: 15px
+                // &:valid
+                //     border-color: #2dc507
+                // &:invalid
+                //     border-color: red
+            textarea
+                padding-top: 10px
+            label
+                display: block
+                font-weight: 300
+                font-size: 16px
+                line-height: 140%
+                color: #adb4b9
+                padding: 0 12px
+            span.err
+                display: block
+                color: red
+                padding: 6px 12px 0
+                font-size: 14px
+            &.error
+                input,
+                textarea
+                    border-color: red
+            &.ok
+                input,
+                textarea
+                    border-color: #2dc507
+
+        .form-policy
+            max-width: 260px
+            font-weight: 300
+            font-size: 16px
+            line-height: 150%
+            letter-spacing: 0.05em
+            color: #86929B
+            margin-left: 30px
+
+    &-close
+        width: 50px
+        height: 50px
+        background-image: url('../img/close.png')
+        background-size: contain
+        background-repeat: no-repeat
+        background-color: transparent
+        border-radius: 50%
+        position: absolute
+        top: 15px
+        right: 15px
+
+    &.is-open
+        display: block
+
+    &#modal-menu
+        z-index: 99999999
+        .modal
+            &-content
+                max-width: 600px
+                display: flex
+                justify-content: space-between
+                padding-bottom: 60px
+                .btn
+                    width: 45%
+                    justify-content: center
+                    margin-bottom: 0
+            &-close
+                width: 40px
+                height: 40px
+
+    &#tnk 
+        z-index: 9999999
+        .modal
+            &-content
+                max-width: 500px
+                h4 
+                    line-height: 130%
+                    margin-bottom: 0
+
+
+@media only screen and ( max-width:  1440px )
+    .modal
+        &-content
+            max-width: 900px
+            padding: 70px 80px
+            .orders-item
+                display: block
+                max-width: 300px
+                margin: 0 auto 20px
+                &-img
+                    margin: 0 auto 20px
+                &__amount
+                    bottom: 0
+
+@media only screen and ( max-width:  1100px )
+    .modal
+        &-close
+            display: none
+        &-content
+            max-width: 400px
+            padding: 50px
+            h4
+                max-width: 250px
+                margin: 0 auto 30px
+                font-size: 30px
+                line-height: 36px
+                text-align: center
+            .inp-wrap
+                max-width: 100%
+                margin-right: 0
+                width: 100%
+                &.wide
+                    margin-bottom: 30px
+            textarea
+                height: 60px
+            .btn
+                font-size: 20px
+                padding: 16px
+                width: 100%
+                text-align: center
+                justify-content: center
+                margin-bottom: 20px
+            .form-policy
+                text-align: center
+                margin: 0 auto
+
+@media only screen and ( max-width:  600px )
+    .modal
+        &-content
+            width: 96%
+            max-width: 340px
+            padding: 40px 15px
+            .inp-wrap
+                margin-bottom: 20px
+                label
+                    font-size: 12px
+                input
+                    height: 40px
+
+        &#modal-menu
+            .modal
+                &-content
+                    padding: 50px 15px
+                    display: block
+                    text-align: center
+                    max-width: 340px
+                    .btn
+                        width: 100%
+                        max-width: 290px
+                        font-size: 16px
+                        margin: 0 auto 25px
+                        padding: 14px
+                        &:last-child
+                            margin-bottom: 0

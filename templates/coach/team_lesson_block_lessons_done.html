@@ -1,0 +1,144 @@
+{% extends 'coach/_blank.html' %}
+{% load static %}
+
+{% block content %}
+    {% csrf_token %}
+    <div class="nk-content-body">
+        <div class="nk-block-head nk-block-head-sm">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <h3 class="nk-block-title page-title">Посещения</h3>
+                </div><!-- .nk-block-head-content -->
+                <div class="nk-block-head-content">
+                    <a href="{% url 'coach_team_lessons_blocks_lessons' team.pk c_block.pk %}" class="btn btn-light"><em class="icon ni ni-back-alt"></em><span>Назад</span></a>
+                </div><!-- .nk-block-head-content -->
+            </div><!-- .nk-block-between -->
+        </div><!-- .nk-block-head -->
+        <div class="nk-block">
+            <div class="card card-bordered card-stretch">
+                <div class="card-inner-group">
+                    <div class="card-inner">
+                        <div class="card-title-group">
+                            <div class="card-title">
+                                <h5 class="title">Отсутсвуют</h5>
+                            </div>
+                        </div><!-- .card-title-group -->
+                    </div><!-- .card-inner -->
+                    <div class="card-inner p-0">
+                        <table class="table table-orders">
+                            <thead class="tb-odr-head">
+                            <tr class="tb-odr-item">
+                                <th class="tb-odr-info">
+                                    <span class="tb-odr-id">ФИО</span>
+                                </th>
+                                <th class="tb-odr-action">
+                                    <span class="tb-odr-date d-none d-md-inline-block">Действие</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="tb-odr-body">
+                            {% for usr in lesson.not_done.all %}
+                                <form method="POST">{% csrf_token %}
+                                <tr class="tb-odr-item">
+                                        <td class="tb-odr-info">
+                                            <span class="tb-odr-id ">{{ usr.surname|title }} {{ usr.name|title }} {{ usr.patronymic|title }}</span>
+                                        </td>
+                                        <td class="tb-odr-action">
+                                            <input type="hidden" name="done" value="{{ usr.pk }}">
+                                            <button type="submit" class="btn btn-dim btn-sm btn-primary">Отметить</button>
+                                        </td>
+                                </tr><!-- .tb-odr-item -->
+                                </form>
+                            {%  endfor %}
+                            </tbody>
+                        </table>
+                    </div><!-- .card-inner -->
+                </div><!-- .card-inner-group -->
+            </div><!-- .card -->
+        </div>
+        <div class="nk-block">
+            <div class="card card-bordered card-stretch">
+                <div class="card-inner-group">
+                    <div class="card-inner">
+                        <div class="card-title-group">
+                            <div class="card-title">
+                                <h5 class="title">Присутсвуют</h5>
+                            </div>
+                        </div><!-- .card-title-group -->
+                    </div><!-- .card-inner -->
+                    <div class="card-inner p-0">
+                        <table class="table table-orders">
+                            <thead class="tb-odr-head">
+                            <tr class="tb-odr-item">
+                                <th class="tb-odr-info">
+                                    <span class="tb-odr-id">ФИО</span>
+                                </th>
+                                <th class="tb-odr-action">
+                                    <span class="tb-odr-date d-none d-md-inline-block">Действие</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="tb-odr-body">
+                            {% for usr in lesson.done.all %}
+                                <form method="POST">{% csrf_token %}
+                                    <tr class="tb-odr-item">
+                                        <td class="tb-odr-info">
+                                            <span class="tb-odr-id ">{{ usr.surname|title }} {{ usr.name|title }} {{ usr.patronymic|title }}</span>
+                                        </td>
+                                        <td class="tb-odr-action">
+                                            <input type="hidden" name="not_done" value="{{ usr.pk }}">
+                                            <button type="submit" class="btn btn-dim btn-sm btn-primary">Отменить</button>
+                                        </td>
+                                    </tr><!-- .tb-odr-item -->
+                                </form>
+                            {%  endfor %}
+                            </tbody>
+                        </table>
+                    </div><!-- .card-inner -->
+                </div><!-- .card-inner-group -->
+            </div><!-- .card -->
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        'use strict';
+        $(document).ready(function () {
+
+            $('.btns-d').on('click', '.btn-save',function()
+            {
+                const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                var name = document.getElementById('t_name').value
+                var descr = document.getElementById('t_descr').value
+                var img = $('#picture-n')[0].files[0];
+                var data = new FormData();
+                data.append('csrfmiddlewaretoken', csrftoken);
+                data.append('name', name);
+                data.append('descr', descr);
+                data.append('img', img);
+                data.append('action', 'create');
+                var ready = true;
+                if(ready){
+                    $.ajax
+                    ({
+                        data: data, // get the form data
+                        type: "POST", // GET or POST
+                        url: "{% url 'coach_team_lessons_blocks_lessons_edit' team.pk c_block.pk lesson.pk %}",
+                        processData: false,
+                        contentType: false,
+                        // on success
+                        success: function (response)
+                        {
+                            window.location.replace('{% url 'coach_team_lessons_blocks_lessons' team.pk c_block.pk %}');
+                        },
+                        // on error
+                        error: function (response)
+                        {
+                            Swal.fire("Ошибка", response.responseJSON.errors, "error");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

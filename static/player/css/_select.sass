@@ -1,0 +1,81 @@
+.select
+    cursor: pointer
+    display: inline-block
+    position: relative
+    z-index: 1000
+    font-size: 16px
+    color: #fff
+    width: 76px
+    height: 40px
+    background: #051330
+    border-radius: 4px
+    &-hidden
+        display: none
+        visibility: hidden
+        padding-right: 10px
+    &-styled
+        color: #ffffff
+        position: relative
+        top: 0
+        right: 0
+        bottom: 0
+        left: 0
+        background-color: #051330
+        height: 40px
+        line-height: 120%
+        display: flex
+        align-items: center
+        border-radius: 7px
+        padding: 0 40px 0 15px
+        transition: all 0.2s ease-in
+        &::after
+            content: ""
+            width: 15px
+            height: 100%
+            background-image: url('../img/arrow-down.svg')
+            background-repeat: no-repeat
+            background-position: center center
+            position: absolute
+            top: 0
+            right: 14px
+    &-options
+        display: none
+        position: absolute
+        height: 120px
+        overflow-y: scroll
+        top: 100%
+        right: 0
+        left: 0
+        z-index: 999
+        margin: 0
+        padding: 0
+        border-radius: 7px
+        list-style: none
+        background-color: #0c1e43
+        box-shadow: 0 3px 90px rgba(0, 0, 0, 0.08)
+        width: 330px
+        max-width: 100%
+        &::-webkit-scrollbar
+            width: 0
+            height: 0
+        li
+            margin: 0
+            padding: 10px 15px
+            -moz-transition: all 0.15s ease-in
+            -o-transition: all 0.15s ease-in
+            -webkit-transition: all 0.15s ease-in
+            transition: all 0.15s ease-in
+            font-size: 14px
+            font-weight: 400
+            color: #ffffff
+
+        li[rel="ru"]
+            &::before
+                content: ''
+                width: 22px
+                height: 14px
+                background-image: url('../img/russia.png')
+            &:hover
+                color: #ffffff
+        li[rel="hide"]
+            display: none
