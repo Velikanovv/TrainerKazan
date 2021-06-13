@@ -26,18 +26,18 @@
                         <div class="nk-tb-list nk-tb-ulist is-compact">
                             <div class="nk-tb-item nk-tb-head">
                                 <div class="nk-tb-col"><span class="sub-text tb-lead">{{ mstat.block.name }}</span></div>
-                                <div class="nk-tb-col"><span class="sub-text tb-lead">{{ mstat.result.normalize }}</span></div>
+                                <div class="nk-tb-col"><span class="sub-text tb-lead text-right">{{ mstat.result.normalize }}</span></div>
                             </div><!-- .nk-tb-item -->
                             {% for stat in usr.ex_statics.all %}
                                 {% if stat.indicator.block == mstat.block %}
                                 <div class="nk-tb-item">
                                     <div class="nk-tb-col">
                                         <div class="user-card">
-                                            <span class="">{{ stat.indicator.name }}</span>
+                                            <span class="sub-text text-right">{{ stat.indicator.name }}</span>
                                         </div>
                                     </div>
                                     <div class="nk-tb-col">
-                                        <span>{{ stat.result.normalize }}</span>
+                                        <span class="sub-text text-right">{{ stat.result.normalize }}</span>
                                     </div>
                                 </div><!-- .nk-tb-item -->
                                 {% endif %}

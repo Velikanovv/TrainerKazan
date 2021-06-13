@@ -28,6 +28,7 @@ class Route(models.Model):
 
 class Reward(models.Model):
     name = models.CharField(max_length=100)
+    description = models.TextField()
     pic = models.ImageField(upload_to=rewards_pic_path, default='rewards/default_pic.jpg')
     pic_small = ImageSpecField(processors=[ResizeToFill(75, 75)], source='pic', format='JPEG', options={'quality': 100})
 
@@ -94,7 +95,8 @@ class IndicatorsMainStatics(models.Model):
     result = models.DecimalField(max_digits=99999, decimal_places=2, default=0)
 
     def __str__(self):
-        return str(self.block.name) + ", " + str(self.user_main_statics.first().name) + ", " + str(self.result)
+        user = self.user_main_statics.first()
+        return str(self.block.name) + ", " + str(user) + ", " + str(self.result)
 
 class IndicatorsExStatics(models.Model):
     main = models.ForeignKey(IndicatorsMainStatics, related_name='indicators_ex_statics', on_delete=models.CASCADE, null=True)

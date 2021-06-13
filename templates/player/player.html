@@ -58,7 +58,7 @@
             <div class="game-title">
                 <h3 class="game__heading">{{ rew.name }}</h3>
                 <p class="game__descr">
-                    Награда
+                    {{ rew.description|linebreaks }}
                 </p>
             </div>
         </a>
@@ -69,6 +69,8 @@
 {% block script %}
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <script>
+
+        const NUMBER_CFG = {count: {{ main_stat.count }}, min: 0, max: 100};
         var data = {
             labels: [{% for bl in main_stat %}"{{ bl.block.name }}"{% if not forloop.last %},{% endif %}{% endfor %}],
             datasets: [
@@ -80,9 +82,10 @@
                     pointBorderColor: "#fff",
                     pointHoverBackgroundColor: "#fff",
                     pointHoverBorderColor: "rgba(179,181,198,1)",
-                    data: [{% for bl in main_stat %}{{ bl.result }}{% if not forloop.last %},{% endif %}{% endfor %}]
-                },
-            ]
+                    data: [{% for bl in main_stat %}{{ bl.result }}{% if not forloop.last %},{% endif %}{% endfor %}],
+                }
+            ],
+
         };
         var ctx = document.getElementById("myChart");
         var options = {
@@ -96,13 +99,11 @@
             legend: {
                 display: false,
             },
-            scales: {
-                yAxes: [{
-                    display: false,
-                    gridLines: {
-                        display: false
-                    }
-                }]
+            scale: {
+                ticks: {
+                    beginAtZero: true,
+                    max: 100
+                }
             }
         };
         var myRadarChart = new Chart(ctx, {

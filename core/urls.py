@@ -31,6 +31,7 @@ urlpatterns = [
     path('coach/team/<int:pk>/main/', views.coach.team, name='coach_team'),
     path('coach/team/<int:pk>/delete/', views.coach.team_delete, name='coach_team_delete'),
     path('coach/team/create/', views.coach.team_create, name='coach_team_create'),
+    path('coach/team/<int:pk>/edit/', views.coach.team_edit, name='coach_team_edit'),
     path('coach/team/<int:pk>/users/create/', views.coach.team_users_create, name='coach_team_users_create'),
     path('coach/team/<int:pk>/users/<int:upk>/edit/', views.coach.team_users_edit, name='coach_team_users_edit'),
     path('coach/team/<int:pk>/users/<int:upk>/delete/', views.coach.team_users_delete, name='coach_team_users_delete'),

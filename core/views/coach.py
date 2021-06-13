@@ -53,6 +53,23 @@ def team_create(request):
         else:
             return redirect('signin')
 
+def team_edit(request, pk):
+    if request.method == 'GET':
+        if request.user.is_authenticated and request.user.role == 2:
+            team = Team.objects.filter(pk=pk).first()
+            return render(request, 'coach/team_edit.html', { 'team': team })
+        else:
+            return redirect('signin')
+    else:
+        if request.user.is_authenticated and request.user.role == 2:
+            if request.POST['t_name'] != '':
+                team = Team.objects.filter(pk=pk).first()
+                team.name=request.POST['t_name']
+                team.save()
+            return redirect('coach_main')
+        else:
+            return redirect('signin')
+
 def team_lessons_blocks_lessons(request, pk, bpk):
     team = Team.objects.filter(pk=pk).first()
     block = LessonsBlock.objects.filter(pk=bpk).first()
@@ -280,6 +297,12 @@ def team_users_delete(request, pk, upk):
     usr = User.objects.filter(pk=upk).first()
     if request.method == 'GET':
         if request.user.is_authenticated and request.user.role == 2:
+            for r in usr.indicators_results.all():
+                r.delete()
+            for ex in usr.ex_statics.all():
+                ex.delete()
+            for ms in usr.main_statics.all():
+                ms.delete()
             usr = User.objects.filter(pk=upk).first().delete()
             return redirect('coach_team', team.pk)
         else:
@@ -313,11 +336,33 @@ def team_users_create(request, pk):
                         new.save()
                         team.users.add(new)
                         team.save()
+                        blocks = IndicatorsBlock.objects.all()
+                        for bl in blocks:
+                            ind = IndicatorsMainStatics.objects.create(block=bl)
+                            ind.save()
+                            new.main_statics.add(ind)
+                            new.save()
+                            for i in bl.indicators_exercise.all():
+                                ins = IndicatorsExStatics.objects.create(main=ind, indicator=i)
+                                ins.save()
+                                new.ex_statics.add(ins)
+                                new.save()
                     else:
                         new = User.objects.create(username=login,password=make_password(password), c_pass=password, name=name, surname=surname, patronymic=patronymic, birthday=date, role=1, player_number=number)
                         new.save()
                         team.users.add(new)
                         team.save()
+                        blocks = IndicatorsBlock.objects.all()
+                        for bl in blocks:
+                            ind = IndicatorsMainStatics.objects.create(block=bl)
+                            ind.save()
+                            new.main_statics.add(ind)
+                            new.save()
+                            for i in bl.indicators_exercise.all():
+                                ins = IndicatorsExStatics.objects.create(main=ind, indicator=i)
+                                ins.save()
+                                new.ex_statics.add(ins)
+                                new.save()
                     return JsonResponse({}, status=200)
                 except Exception as e:
                     return JsonResponse({'errors': 'Ошибка при создании пользвателя: ' + e.args[0]}, status=400)
@@ -589,13 +634,16 @@ def rewards_edit(request, pk):
         if request.POST['action'] == 'create':
             try:
                 title = request.POST['title']
+                descr = request.POST['descr']
                 if 'img' in request.FILES:
                     pic = request.FILES.get('img')
                     reward.name = title
+                    reward.description = descr
                     reward.pic = pic
                     reward.save()
                 else:
                     reward.name = title
+                    reward.description = descr
                     reward.save()
                 return JsonResponse({}, status=200)
             except:
@@ -614,12 +662,13 @@ def rewards_create(request):
         if request.POST['action'] == 'create':
             try:
                 title = request.POST['title']
+                descr = request.POST['descr']
                 if 'img' in request.FILES:
                     pic = request.FILES.get('img')
-                    new = Reward.objects.create(name=title, pic=pic)
+                    new = Reward.objects.create(name=title, description=descr, pic=pic)
                     new.save()
                 else:
-                    new = Reward.objects.create(name=title)
+                    new = Reward.objects.create(name=title, description=descr)
                     new.save()
                 return JsonResponse({}, status=200)
             except:

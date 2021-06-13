@@ -25,6 +25,12 @@
             </div>
         </div>
         <div class="form-group">
+            <label class="form-label">Описание</label>
+            <div class="input-group">
+                <textarea class="form-control" placeholder="Введите описание" aria-label="" aria-describedby="btnGroupAddon" id="descr"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="form-label">Фото</label>
             <div class="form-control-wrap">
                 <div class="custom-file">
@@ -48,11 +54,13 @@
             {
                 const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
                 var title = document.getElementById('newstitle').value
+                var descr = document.getElementById('descr').value
                 var data = new FormData();
                 var img = $('#picture-n')[0].files[0];
                 data.append('img', img);
                 data.append('csrfmiddlewaretoken', csrftoken);
                 data.append('title', title);
+                data.append('descr', descr);
                 data.append('action', 'create');
                 var ready = true;
                 if(ready){

@@ -131,9 +131,10 @@ def homework(request, pk):
                         video = request.FILES.get('img')
                         done_hw = DoneHomeWork.objects.filter(user=usr, homework=homework)
                         if done_hw.exists():
-                            done_hw = done_hw.first()
-                            done_hw.video=video
-                            done_hw.save()
+                            done_hw.delete()
+                            new = DoneHomeWork.objects.create(user=usr, homework=homework)
+                            new.video=video
+                            new.save()
                             homework.not_done.remove(usr)
                             homework.done.add(usr)
                             homework.save()
