@@ -29,7 +29,7 @@ class Route(models.Model):
 class Reward(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
-    pic = models.ImageField(upload_to=rewards_pic_path, default='rewards/default_pic.jpg')
+    pic = models.ImageField(upload_to=rewards_pic_path, default='default_pic.jpg')
     pic_small = ImageSpecField(processors=[ResizeToFill(75, 75)], source='pic', format='JPEG', options={'quality': 100})
 
     def __str__(self):
@@ -111,7 +111,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(_('username'), unique=True, max_length=100)
     email = models.EmailField(_('email address'), blank=True, null=True)
 
-    pic = models.ImageField(upload_to=users_pic_path, default='users/default_pic.jpg')
+    pic = models.ImageField(upload_to=users_pic_path, default='default_pic.jpg')
     pic_small = ImageSpecField(processors=[ResizeToFill(75, 75)], source='pic', format='JPEG', options={'quality': 100})
 
     name = models.CharField(blank=True, max_length=100)

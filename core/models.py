@@ -33,7 +33,7 @@ class HomeWork(models.Model):
     name = models.CharField(max_length=200)
     text = models.TextField()
 
-    pic = models.ImageField(upload_to=homeworks_pic_path, default='users/default_pic.jpg')
+    pic = models.ImageField(upload_to=homeworks_pic_path, default='default_pic.jpg')
     pic_small = ImageSpecField(processors=[ResizeToFill(75, 75)], source='pic', format='JPEG', options={'quality': 100})
 
     date = models.DateTimeField(default=timezone.now)
@@ -57,7 +57,7 @@ class LessonsBlock(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
 
-    pic = models.ImageField(upload_to=lessonsblocks_pic_path, default='users/default_pic.jpg')
+    pic = models.ImageField(upload_to=lessonsblocks_pic_path, default='default_pic.jpg')
     pic_small = ImageSpecField(processors=[ResizeToFill(75, 75)], source='pic', format='JPEG', options={'quality': 100})
 
     date = models.DateTimeField(default=timezone.now, blank=True)
@@ -90,7 +90,7 @@ class Lesson(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
 
-    pic = models.ImageField(upload_to=lessons_pic_path, default='users/default_pic.jpg')
+    pic = models.ImageField(upload_to=lessons_pic_path, default='default_pic.jpg')
     pic_small = ImageSpecField(processors=[ResizeToFill(75, 75)], source='pic', format='JPEG', options={'quality': 100})
 
     done = models.ManyToManyField(User, related_name='lesson_done', blank=True)

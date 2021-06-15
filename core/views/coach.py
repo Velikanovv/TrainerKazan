@@ -336,6 +336,11 @@ def team_users_create(request, pk):
                         new.save()
                         team.users.add(new)
                         team.save()
+                        l_blocks = LessonsBlock.objects.filter(team=team).all()
+                        for block in l_blocks:
+                            for lesson in block.lessons.all():
+                                lesson.not_done.add(new)
+                                lesson.save()
                         blocks = IndicatorsBlock.objects.all()
                         for bl in blocks:
                             ind = IndicatorsMainStatics.objects.create(block=bl)
@@ -352,6 +357,11 @@ def team_users_create(request, pk):
                         new.save()
                         team.users.add(new)
                         team.save()
+                        l_blocks = LessonsBlock.objects.filter(team=team).all()
+                        for block in l_blocks:
+                            for lesson in block.lessons.all():
+                                lesson.not_done.add(new)
+                                lesson.save()
                         blocks = IndicatorsBlock.objects.all()
                         for bl in blocks:
                             ind = IndicatorsMainStatics.objects.create(block=bl)

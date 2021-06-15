@@ -62,14 +62,7 @@ WSGI_APPLICATION = 'TrainerKazan.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
-        'USER': 'trainer22_admin',
-        'PASSWORD': 'trainer22_admin22',
-        'HOST': 'db.example.com',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require'
-        }
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
